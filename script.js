@@ -11,6 +11,7 @@ if (buttonCreateWindow) {
 // Переменная-счетчик
 let zIndex = 1;
 
+
 /**
  * @param {MouseEvent} event
  */
