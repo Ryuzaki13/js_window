@@ -8,7 +8,7 @@ if (buttonCreateWindow) {
     // Для этой кнопки установить событие на клик мыши
     buttonCreateWindow.onclick = createWindow;
 }
-// Переменная-счетчик
+// Переменная-счетчик необходима для установки позиции по осbb
 let zIndex = 1;
 
 
