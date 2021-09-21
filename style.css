@@ -16,6 +16,9 @@
     position: relative;
     user-select: none;
 }
+.head:hover {
+    cursor: move;
+}
 .head > div:first-child {
     overflow: hidden;
     white-space: nowrap;
