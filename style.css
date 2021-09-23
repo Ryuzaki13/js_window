@@ -4,28 +4,59 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+body {
+    background-color: #ffffff;
+}
+
 .window {
-    width: 200px;
-    height: 200px;
-    background-color: #d0d0d0;
+    width: 400px;
+    background-color: #f0f0f0;
+    border: 2px solid #a1a1a1;
     position: fixed;
 }
+
+.window.top {
+    box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+    border-color: #333333;
+}
+
+.window:not(.top) > .head {
+    background-color: #a1a1a1;
+}
+
+.window.hidden {
+    position: static;
+}
+
+.window.hidden > .body {
+    display: none;
+}
+
 .head {
     background-color: #333333;
     padding: 4px 30px 4px 10px;
     position: relative;
     user-select: none;
 }
+
 .head:hover {
     cursor: move;
 }
+
 .head > div:first-child {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     color: white;
 }
-.close {
+
+.body {
+    min-height: 260px;
+}
+
+.close,
+.hide {
     width: 16px;
     height: 16px;
     position: absolute;
@@ -33,8 +64,15 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+.hide {
+    right: 30px;
+}
+
 .close::before,
-.close::after {
+.close::after,
+.hide::before,
+.hide::after {
     content: "";
     background-color: white;
     position: absolute;
@@ -42,18 +80,56 @@
     width: 2px;
     height: 100%;
     left: 50%;
+}
+
+.close::before {
     transform: translateX(-50%) rotateZ(-45deg);
 }
+
 .close::after {
     transform: translateX(-50%) rotateZ(45deg);
 }
-.close:hover {
+
+.hide::before {
+    top: 50%;
+    left: 30%;
+    height: 50%;
+}
+
+.hide::after {
+    top: 50%;
+    left: 70%;
+    height: 50%;
+}
+
+.hide::before {
+    transform: translate(-50%, -50%) rotateZ(-45deg);
+}
+
+.hide::after {
+    transform: translate(-50%, -50%) rotateZ(45deg);
+}
+
+.window.hidden .hide::before {
+    transform: translate(-50%, -50%) rotateZ(45deg);
+}
+
+.window.hidden .hide::after {
+    transform: translate(-50%, -50%) rotateZ(-45deg);
+}
+
+.close:hover,
+.hide:hover {
     cursor: pointer;
 }
+
 .close:hover::before,
-.close:hover::after {
+.close:hover::after,
+.hide:hover::before,
+.hide:hover::after {
     background-color: red;
 }
+
 .head[data-is-move="true"]::before {
     content: "";
     position: fixed;
@@ -61,4 +137,42 @@
     left: 0;
     bottom: 0;
     right: 0;
+}
+
+.hidden-container {
+    position: fixed;
+    left: 2px;
+    bottom: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+}
+.hidden-container > .window {
+    margin: 1px;
+}
+.hidden-container > .window > .head {
+    background-color: #3d6274;
+}
+
+#ButtonCreateWindow {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 60px;
+    border-radius: 5px;
+    border: none;
+    background: linear-gradient(45deg, #7ed9ff, #ea70ff);
+    color: #fff;
+    font-family: -apple-system, sans-serif;
+    font-size: 21px;
+    text-shadow: 0 0 4px #2f38b1;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+    transition: box-shadow 200ms, text-shadow 200ms;
+}
+#ButtonCreateWindow:hover {
+    cursor: pointer;
+    text-shadow: 0 0 8px #000c4a;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
