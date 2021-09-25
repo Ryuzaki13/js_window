@@ -69,6 +69,13 @@ function createWindow(event) {
 function maximizeWindow(event) {
     // Получить родительский элемент "окно"
     let thisWindow = this.closest(".window");
+
+    let isHidden = false;
+    if (thisWindow.classList.contains("hidden")) {
+        isHidden = true;
+        hideWindow.call(thisWindow.querySelector(".maximize"));
+    }
+
     if (thisWindow) {
         // Если maximize = 1, значит оно уже во весь экран, нужно уменьшить
         if (thisWindow.dataset.maximize === "1") {
@@ -89,7 +96,11 @@ function maximizeWindow(event) {
             let bound = thisWindow.getBoundingClientRect();
             // Сохранить их в dataset текущего окна
             thisWindow.dataset.width = "" + bound.width;
-            thisWindow.dataset.height = "" + bound.height;
+            if (isHidden) {
+                thisWindow.dataset.height = "" + thisWindow.dataset.height;
+            } else {
+                thisWindow.dataset.height = "" + bound.height;
+            }
             thisWindow.dataset.left = "" + bound.left;
             thisWindow.dataset.top = "" + bound.top;
             // Установить позицию со всех сторон по 0, чтобы окно занимало
@@ -147,6 +158,7 @@ function hideWindow(event) {
     if (thisWindow.classList.contains("hidden")) {
         thisWindow.classList.add("top");
         thisWindow.classList.remove("hidden");
+        thisWindow.style.height = thisWindow.dataset.height + "px";
         if (typeof thisWindow.onmousedown === "function") {
             thisWindow.onmousedown.call(thisWindow);
         }
@@ -161,6 +173,8 @@ function hideWindow(event) {
 
     thisWindow.classList.remove("top");
     thisWindow.classList.add("hidden");
+    thisWindow.dataset.height = "" + thisWindow.getBoundingClientRect().height;
+    thisWindow.style.height = "auto";
     hiddenContainer.append(thisWindow);
 }
 
