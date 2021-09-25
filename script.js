@@ -57,6 +57,9 @@ function createWindow(event) {
     document.body.append(rootWindow);
 }
 
+/**
+ * @param {MouseEvent} event
+ */
 function maximizeWindow(event) {
     let thisWindow = this.closest(".window");
     if (thisWindow) {
