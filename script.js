@@ -51,6 +51,7 @@ function createWindow(event) {
     close.onclick = closeWindow;
     hide.onclick = hideWindow;
     maximize.onclick = maximizeWindow;
+    head.ondblclick = maximizeWindow;
     rootWindow.onmousedown = topMost;
 
     // Добавить созданное окно в конец тела страницы
@@ -144,7 +145,12 @@ function hideWindow(event) {
  * @param {MouseEvent} event
  */
 function onMouseDown(event) {
-    if (this.closest(".window.hidden")) return;
+    let thisWindow = this.closest(".window");
+    if (!thisWindow ||
+        thisWindow.classList.contains("hidden") ||
+        thisWindow.dataset.maximize === "1"
+    ) return;
+
     // Установить флажок на текущее окно, говоря, что его можно перемещать
     // Событие onmousemove будет работать для этого элемента, если значение "true
     this.dataset.isMove = "true";
