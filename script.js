@@ -12,6 +12,8 @@ if (buttonCreateWindow) {
 // чтобы активное окно было всегда поверх всех остальных
 let zIndex = 1;
 let windowCounter = 1;
+const DEFAULT_WINDOW_WIDTH = 400;
+const DEFAULT_WINDOW_HEIGHT = 300;
 
 /**
  * Создание нового окна
@@ -29,7 +31,10 @@ function createWindow(event) {
      * </div>
      */
 
-    let rootWindow = Div({className: "window"}),
+    let rootWindow = Div({
+            className: "window",
+            style: `width:${DEFAULT_WINDOW_WIDTH}px;height:${DEFAULT_WINDOW_HEIGHT}px;`
+        }),
         head = Div({className: "head"}),
         body = Div({className: "body"}),
         headerText = Div({textContent: "Это окно #" + windowCounter++}),
@@ -66,6 +71,8 @@ function maximizeWindow(event) {
     if (thisWindow) {
         if (thisWindow.dataset.maximize === "1") {
             thisWindow.dataset.maximize = "0";
+            thisWindow.style.width = thisWindow.dataset.width + "px";
+            thisWindow.style.height = thisWindow.dataset.height + "px";
             thisWindow.style.top = thisWindow.dataset.top + "px";
             thisWindow.style.left = thisWindow.dataset.left + "px";
             thisWindow.style.right = null;
@@ -73,6 +80,8 @@ function maximizeWindow(event) {
             thisWindow.style.width = null;
         } else {
             let bound = thisWindow.getBoundingClientRect();
+            thisWindow.dataset.width = "" + bound.width;
+            thisWindow.dataset.height = "" + bound.height;
             thisWindow.dataset.left = "" + bound.left;
             thisWindow.dataset.top = "" + bound.top;
             thisWindow.style.left = "0px";
@@ -80,6 +89,7 @@ function maximizeWindow(event) {
             thisWindow.style.right = "0px";
             thisWindow.style.bottom = "0px";
             thisWindow.style.width = "auto";
+            thisWindow.style.height = "auto";
             thisWindow.dataset.maximize = "1";
         }
     }

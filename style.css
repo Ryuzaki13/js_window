@@ -51,11 +51,7 @@ body {
     color: white;
 }
 
-.body {
-    min-height: 260px;
-}
-
-.window[data-maximize="1"] > .body {
+.window > .body {
     height: 100%;
     width: 100%;
 }

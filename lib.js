@@ -29,6 +29,7 @@ function Div(params) {
         div.className = params.className;
     }
     if (params.style) {
+        console.log(params.style)
         div.style.cssText = params.style;
     }
     if (params.id) {
