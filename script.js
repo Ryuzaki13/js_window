@@ -67,29 +67,42 @@ function createWindow(event) {
  * @param {MouseEvent} event
  */
 function maximizeWindow(event) {
+    // Получить родительский элемент "окно"
     let thisWindow = this.closest(".window");
     if (thisWindow) {
+        // Если maximize = 1, значит оно уже во весь экран, нужно уменьшить
         if (thisWindow.dataset.maximize === "1") {
+            // Установить флажок 0, говоря, что при следующем нажатии его
+            // нужно развернуть во весь экран
             thisWindow.dataset.maximize = "0";
+            // Восстановить сохраненные данные размера и позиции окна,
+            // которые были до разворачивания во весь экран.
             thisWindow.style.width = thisWindow.dataset.width + "px";
             thisWindow.style.height = thisWindow.dataset.height + "px";
             thisWindow.style.top = thisWindow.dataset.top + "px";
             thisWindow.style.left = thisWindow.dataset.left + "px";
+            // Эти свойства больше не нужны
             thisWindow.style.right = null;
             thisWindow.style.bottom = null;
-            thisWindow.style.width = null;
         } else {
+            // Получить информацию о размерах и позиции окна
             let bound = thisWindow.getBoundingClientRect();
+            // Сохранить их в dataset текущего окна
             thisWindow.dataset.width = "" + bound.width;
             thisWindow.dataset.height = "" + bound.height;
             thisWindow.dataset.left = "" + bound.left;
             thisWindow.dataset.top = "" + bound.top;
+            // Установить позицию со всех сторон по 0, чтобы окно занимало
+            // все пространство экрана (окна браузера)
             thisWindow.style.left = "0px";
             thisWindow.style.top = "0px";
             thisWindow.style.right = "0px";
             thisWindow.style.bottom = "0px";
+            // Установленные размеры не должны препятствовать свойствам
+            // right и bottom, поэтому задать им размеры auto
             thisWindow.style.width = "auto";
             thisWindow.style.height = "auto";
+            // Установить флажок, чтобы при следующем нажатии окно уменьшить
             thisWindow.dataset.maximize = "1";
         }
     }
