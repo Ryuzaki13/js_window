@@ -33,11 +33,14 @@ function createWindow(event) {
         head = Div({className: "head"}),
         body = Div({className: "body"}),
         headerText = Div({textContent: "Это окно #" + windowCounter++}),
+        buttons = Div({className: "buttons"}),
         hide = Div({className: "hide"}),
+        maximize = Div({className: "maximize"}),
         close = Div({className: "close"});
 
     rootWindow.append(head, body);
-    head.append(headerText, hide, close);
+    buttons.append(hide, maximize, close)
+    head.append(headerText, buttons);
 
     // События на заголовок для перемещения окна
     head.onmousedown = onMouseDown;
@@ -47,10 +50,35 @@ function createWindow(event) {
     // Событие на кнопку "Закрыть"
     close.onclick = closeWindow;
     hide.onclick = hideWindow;
+    maximize.onclick = maximizeWindow;
     rootWindow.onmousedown = topMost;
 
     // Добавить созданное окно в конец тела страницы
     document.body.append(rootWindow);
+}
+
+function maximizeWindow(event) {
+    let thisWindow = this.closest(".window");
+    if (thisWindow) {
+        if (thisWindow.dataset.maximize === "1") {
+            thisWindow.dataset.maximize = "0";
+            thisWindow.style.top = thisWindow.dataset.top + "px";
+            thisWindow.style.left = thisWindow.dataset.left + "px";
+            thisWindow.style.right = null;
+            thisWindow.style.bottom = null;
+            thisWindow.style.width = null;
+        } else {
+            let bound = thisWindow.getBoundingClientRect();
+            thisWindow.dataset.left = "" + bound.left;
+            thisWindow.dataset.top = "" + bound.top;
+            thisWindow.style.left = "0px";
+            thisWindow.style.top = "0px";
+            thisWindow.style.right = "0px";
+            thisWindow.style.bottom = "0px";
+            thisWindow.style.width = "auto";
+            thisWindow.dataset.maximize = "1";
+        }
+    }
 }
 
 /**
@@ -148,3 +176,5 @@ function onMouseMove(event) {
     this.dataset.x = "" + event.clientX;
     this.dataset.y = "" + event.clientY;
 }
+
+// https://github.com/Ryuzaki13/window_move
