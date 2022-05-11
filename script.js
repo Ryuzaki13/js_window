@@ -191,10 +191,13 @@ function onMouseDown(event) {
     // Установить флажок на текущее окно, говоря, что его можно перемещать
     // Событие onmousemove будет работать для этого элемента, если значение "true
     this.dataset.isMove = "true";
+
+    let bound = this.parentElement.getBoundingClientRect();
+
     // Сохранить текущую позицию мыши, чтобы потом найти разницу между предыдущей
     // и текущей позицией мыши
-    this.dataset.x = "" + event.clientX;
-    this.dataset.y = "" + event.clientY;
+    this.dataset.x = "" + (event.clientX - bound.left);
+    this.dataset.y = "" + (event.clientY - bound.top);
 }
 
 /**
@@ -204,23 +207,22 @@ function onMouseUp(event) {
     this.dataset.isMove = "false";
 }
 
+const STEP = 20;
+
 /**
  * @param {MouseEvent} event
  */
 function onMouseMove(event) {
     if (this.dataset.isMove !== "true") return;
 
-    // Разница позиции курсора текущего кадра с предыдущим
-    let x = event.clientX - +this.dataset.x;
-    let y = event.clientY - +this.dataset.y;
+    let x = event.x - +this.dataset.x;
+    let y = event.y - +this.dataset.y;
 
-    let bound = this.parentElement.getBoundingClientRect();
+    let computedX = Math.round((x) / STEP) * STEP;
+    let computedY = Math.round((y) / STEP) * STEP;
 
-    this.parentElement.style.left = `${bound.left + x}px`;
-    this.parentElement.style.top = `${bound.top + y}px`;
-
-    this.dataset.x = "" + event.clientX;
-    this.dataset.y = "" + event.clientY;
+    this.parentElement.style.left = `${computedX}px`;
+    this.parentElement.style.top = `${computedY}px`;
 }
 
 // https://github.com/Ryuzaki13/window_move

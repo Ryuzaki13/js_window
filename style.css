@@ -6,7 +6,11 @@
 }
 
 body {
-    background-color: #ffffff;
+    height: 100vh;
+    background: linear-gradient(90deg, #ffffff 19px, transparent 1%),
+    linear-gradient(#ffffff 19px, transparent 1%),
+    #303030;
+    background-size: 20px 20px;
 }
 
 .window {
@@ -91,6 +95,7 @@ body {
 .close::before {
     transform: translateX(-50%) rotateZ(-45deg);
 }
+
 .close::after {
     transform: translateX(-50%) rotateZ(45deg);
 }
@@ -100,6 +105,7 @@ body {
     left: 30%;
     height: 50%;
 }
+
 .hide::after {
     top: 50%;
     left: 70%;
@@ -109,6 +115,7 @@ body {
 .hide::before {
     transform: translate(-50%, -50%) rotateZ(-45deg);
 }
+
 .hide::after {
     transform: translate(-50%, -50%) rotateZ(45deg);
 }
@@ -119,6 +126,7 @@ body {
     margin: 2px;
     border: 2px solid white;
 }
+
 .maximize:hover {
     border-color: red;
     cursor: pointer;
@@ -161,9 +169,11 @@ body {
     flex-wrap: wrap;
     flex-direction: column-reverse;
 }
+
 .hidden-container > .window {
     margin: 1px;
 }
+
 .hidden-container > .window > .head {
     background-color: #3d6274;
 }
@@ -185,6 +195,7 @@ body {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
     transition: box-shadow 200ms, text-shadow 200ms;
 }
+
 #ButtonCreateWindow:hover {
     cursor: pointer;
     text-shadow: 0 0 8px #000c4a;
